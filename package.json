@@ -1,0 +1,11 @@
+{
+    "name": "http-tools",
+    "version": "1.0.0",
+    "description": "",
+    "bin": { "http-filter": "./bin/http-filter" },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+}

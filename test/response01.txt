@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Date: Tue, 04 Oct 2016 12:16:03 GMT
+Server: Apache/2.2.10 (Win32) mod_jk/1.2.28 mod_auth_sspi/1.0.4
+Accept-Ranges: bytes
+ETag: W/"305-1290678862324"
+Last-Modified: Thu, 25 Nov 2010 09:54:22 GMT
+Content-Length: 305
+Keep-Alive: timeout=15, max=98
+Connection: Keep-Alive
+Content-Type: text/html;charset=UTF-8
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html>
+<!-- this DOCTYPE SHOULD turn STD or p-STD mode in all browsers -->
+<head>
+<meta http-equiv="refresh" content="0; url=wrapper.html?path=default3.html&dir=configurations">
+</head>
+</html>

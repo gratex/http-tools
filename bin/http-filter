@@ -1,0 +1,107 @@
+#!/bin/bash
+
+## filter http repsponce/request
+## allow to filter security info, page haders etc.
+## Version: 2.0 (as node module, but bash)
+##
+## Usage: http-filter [body|cookie|header|paging|security]
+##  all options can be negated i.e no-body, no-security, ...
+##
+## Samples:
+##  cat ./test/response01.txt | http-filter no-body | http-filter no-cookie no-paging
+##  http-filter nocookie no-security < inputFile
+##  cat inputfile | http-filter cookie - select only cookie
+##  cat inputfile | http-filter cookie security - select only cookie and security info
+
+
+filter() {
+	local filterPos=""
+	local filterNeg=""
+	
+	local filters="$current/../src/filters"
+	local invert=false
+	
+	local input=$(sed 's/^[[:space:]]*//;s/[[:space:]]*$//') # trim
+	
+	for i in "$@"; do
+				
+		if [[ $i == no-* ]]; then
+			invert=true
+			i=${i#no-}
+		else
+			invert=false	
+		fi
+		
+		if ([ "$i" == "body" ] || [ "$i" == "header" ]); then
+			if ([ "$i" == "body" ] && [ $invert == true ]) || ([ "$i" == "header" ] && [ $invert == false ]); then
+				input=$(echo -e "$input" | perl -0 -ne 'if (/([\W\w]+)\r?\n\r?\n([\w\W]+)/) {print "$1" . "\n"}')
+				continue
+			else
+				input=$(echo -e "$input" | perl -0 -ne 'if (/([\W\w]+)\r?\n\r?\n([\w\W]+)/) {print "$2" . "\n"}')
+				continue
+			fi
+		fi
+		
+		path=$filters/$i
+		if [[ -a $path ]]; then
+			if $invert ; then
+				filterNeg="$filterNeg\|$(perl -pn -e 's!\r?\n!\\\|!' $path)"
+			else
+				filterPos="$filterPos\|$(perl -pn -e 's!\r?\n!\\\|!' $path)"
+			fi 
+		else
+			echo "ERROR: $path not found" >&2
+		fi
+	done
+	
+	# remove \| from beginning
+	filterNeg=${filterNeg#\\|} 
+	filterPos=${filterPos#\\|}
+	
+	#echo "$filterNeg"
+	#echo "$filterPos"
+	
+	local execute=""
+	if [[ ! -z $filterPos ]]; then
+		execute="$execute | grep -i \"$filterPos\""
+	fi
+	if [[ ! -z $filterNeg ]]; then
+		execute="$execute | grep -i -v \"$filterNeg\""
+	fi
+	
+	# eval string command
+	eval "echo '$input' $execute"
+}
+
+usage(){
+	# inlined from _usage.sh
+	strip_hashes=0
+
+	case "$#" in
+		1) sharpCount=1;;
+		2) sharpCount=$2;;
+		3) sharpCount=1; strip_hashes=$3;;
+		4) sharpCount=$2; strip_hashes=$4;;
+		*) . _usage.sh "${BASH_SOURCE[0]}" 2 --strip_hashes 1; exit 1;;
+	esac
+
+	grep "^#\{"$sharpCount"\}" "$( cd "$( dirname "$1" )" && pwd )/$(basename ""$1"")" \
+		| grep -v -e "^#-*$\|^#!\/" \
+		| if [ $strip_hashes -eq 1 ]
+		then
+			xs-sed -e "s/^#* \?//"
+		else
+			cat
+		fi
+
+}
+
+if [ "$1" == "-h" -o  "$1" == "--help" -o -t 0 -a "$#" == 0 ]
+then 
+	usage "${BASH_SOURCE[0]}" 2 --strip_hashes 1;
+	exit 1
+fi
+# this shell work for simlinks as well
+current=$(dirname "$(readlink -f "$0" 2>/dev/null || echo "$0")")
+
+filter "$@"
