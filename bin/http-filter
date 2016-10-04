@@ -2,7 +2,7 @@
 
 ## filter http repsponce/request
 ## allow to filter security info, page haders etc.
-## Version: 2.0 (as node module, but bash)
+## Version: 2.1 (debug)
 ##
 ## Usage: http-filter [body|cookie|header|paging|security]
 ##  all options can be negated i.e no-body, no-security, ...
@@ -95,6 +95,22 @@ usage(){
 		fi
 
 }
+function get_realpath() {
+
+    [[ ! -f "$1" ]] && return 1 # failure : file does not exist.
+    [[ -n "$no_symlinks" ]] && local pwdp='pwd -P' || local pwdp='pwd' # do symlinks.
+    echo "$( cd "$( echo "${1%/*}" )" 2>/dev/null; $pwdp )"/"${1##*/}" # echo result.
+    return 0 # success
+
+}
+echo "0:           $0"
+echo "readlink:    $(readlink -f "$0")"
+echo "0/:          ${0%/*}"
+echo "BASH_SOURCE: ${BASH_SOURCE[0]}"
+echo "curr:        $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "curr-P:      $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P)"
+echo "get_realpath:$(get_realpath $0)"
+exit
 
 if [ "$1" == "-h" -o  "$1" == "--help" -o -t 0 -a "$#" == 0 ]
 then 
