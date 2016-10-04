@@ -2,7 +2,7 @@
 
 ## filter http repsponce/request
 ## allow to filter security info, page haders etc.
-## Version: 2.1 (debug)
+## Version: 2.0.1 (OSX shell work, symlink fix)
 ##
 ## Usage: http-filter [body|cookie|header|paging|security]
 ##  all options can be negated i.e no-body, no-security, ...
@@ -103,21 +103,15 @@ function get_realpath() {
     return 0 # success
 
 }
-echo "0:           $0"
-echo "readlink:    $(readlink -f "$0")"
-echo "0/:          ${0%/*}"
-echo "BASH_SOURCE: ${BASH_SOURCE[0]}"
-echo "curr:        $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo "curr-P:      $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P)"
-echo "get_realpath:$(get_realpath $0)"
-exit
+
+# get current dir of script , absolute, one hop symlinks supported, https://gist.github.com/esycat/5279354
+current="$([ -L "$0" ] && BASHSOURCE="$(dirname "$0")/$(readlink "$0")" || BASHSOURCE="$0"; cd "$( dirname "$BASHSOURCE")" && pwd )"
 
 if [ "$1" == "-h" -o  "$1" == "--help" -o -t 0 -a "$#" == 0 ]
 then 
 	usage "${BASH_SOURCE[0]}" 2 --strip_hashes 1;
 	exit 1
 fi
-# this shell work for simlinks as well
-current=$(dirname "$(readlink -f "$0" 2>/dev/null || echo "$0")")
+
 
 filter "$@"
