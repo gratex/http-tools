@@ -21,6 +21,9 @@ filter() {
 	local filters="$current/../src/filters"
 	local invert=false
 	
+	local header
+	local body
+
 	local input=$(sed 's/^[[:space:]]*//;s/[[:space:]]*$//') # trim
 	
 	for i in "$@"; do
@@ -31,13 +34,13 @@ filter() {
 		else
 			invert=false	
 		fi
-		
+	
 		if ([ "$i" == "body" ] || [ "$i" == "header" ]); then
 			if ([ "$i" == "body" ] && [ $invert == true ]) || ([ "$i" == "header" ] && [ $invert == false ]); then
-				input=$(echo -e "$input" | perl -0 -ne 'if (/([\W\w]+)\r?\n\r?\n([\w\W]+)/) {print "$1" . "\n"}')
+				header=$(echo -e "$input" | perl -0 -ne 'if (/([\W\w]+)\r?\n\r?\n([\w\W]+)/) {print "$1" . "\n"}')
 				continue
 			else
-				input=$(echo -e "$input" | perl -0 -ne 'if (/([\W\w]+)\r?\n\r?\n([\w\W]+)/) {print "$2" . "\n"}')
+				body=$(echo -e "$input" | perl -0 -ne 'if (/([\W\w]+)\r?\n(\r?\n[\w\W]+)/) {print "$2" . "\n"}')
 				continue
 			fi
 		fi
@@ -69,8 +72,15 @@ filter() {
 		execute="$execute | grep -i -v \"$filterNeg\""
 	fi
 	
-	# eval string command
-	eval "echo '$input' $execute"
+	# if header was required, just print header
+	if [ "$header" ]; then 
+		echo "$header"
+	else
+		# if no parameter print input
+		[[ "$execute" || "$#" == 0 ]] && eval "echo '$input' $execute"
+	fi
+	# if body is filled, print body at the end
+	echo "$body"
 }
 
 usage(){
