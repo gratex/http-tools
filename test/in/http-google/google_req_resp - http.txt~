@@ -1,0 +1,23 @@
+GET http://www.google.com/ HTTP/1.1
+Accept: text/html, application/xhtml+xml, */*
+Accept-Language: sk-SK
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+Host: www.google.com
+Cookie: NID=88=7cz5fGzFI27WGUkeJZvna7zIRsw59qLVfb5BZ8rx_ylvJWpi2u--sTNyBODdM3llJ-3pPNjeODAlAlbwesYfFir0Xo-29FoUwXXNqSgfa-TYLZf0NbFuUOz7VcBY_FT3
+
+HTTP/1.1 302 Found
+Cache-Control: private
+Content-Type: text/html; charset=UTF-8
+Location: http://www.google.sk/?gfe_rd=cr&ei=KwL9V9nlJs-o8weMnp3IBw
+Content-Length: 258
+Date: Tue, 11 Oct 2016 15:15:55 GMT
+
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>302 Moved</TITLE></HEAD><BODY>
+<H1>302 Moved</H1>
+The document has moved
+<A HREF="http://www.google.sk/?gfe_rd=cr&amp;ei=KwL9V9nlJs-o8weMnp3IBw">here</A>.
+</BODY></HTML>
+

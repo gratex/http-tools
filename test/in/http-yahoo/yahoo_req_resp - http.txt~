@@ -1,0 +1,35 @@
+GET http://www.yahoo.com/ HTTP/1.1
+Accept: text/html, application/xhtml+xml, */*
+Accept-Language: sk-SK
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+Host: www.yahoo.com
+
+HTTP/1.1 301 Redirect
+Date: Tue, 11 Oct 2016 15:06:15 GMT
+Via: https/1.1 ir12.fp.ir2.yahoo.com (ApacheTrafficServer)
+Server: ATS
+Location: https://www.yahoo.com/
+Content-Type: text/html
+Content-Language: en
+Cache-Control: no-store, no-cache
+Connection: keep-alive
+Set-Cookie: B=95ef4vtbvpvv7&b=3&s=in; expires=Wed, 11-Oct-2017 15:06:15 GMT; path=/; domain=.yahoo.com
+Content-Length: 304
+
+<HTML>
+<HEAD>
+<TITLE>Document Has Moved</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="white" FGCOLOR="black">
+<H1>Document Has Moved</H1>
+<HR>
+
+<FONT FACE="Helvetica,Arial"><B>
+Description: The document you requested has moved to a new location.  The new location is "https://www.yahoo.com/".
+</B></FONT>
+<HR>
+</BODY>
+

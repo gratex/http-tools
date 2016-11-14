@@ -1,0 +1,8 @@
+GET https://www.google.sk/?gfe_rd=cr&ei=KwL9V9nlJs-o8weMnp3IBw&gws_rd=ssl HTTP/1.1
+Accept: text/html, application/xhtml+xml, */*
+Accept-Language: sk-SK
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+Cookie: NID=88=w82QxJq7n4r5PrBiLi7D_sxHjNU_qaaQaTbFwYqvkn13A71OVko3WBG5ks6WHT9f7Q-zejStMZnyTeLEJVxPzt0C0gJclyU9L8mebc_2eYLiKW5uB_wSTqLcdvrmy6Ud; CONSENT=WP.258aa9; OGPC=5062199-2:
+Host: www.google.sk

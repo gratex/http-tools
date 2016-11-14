@@ -1,0 +1,8 @@
+GET http://www.google.com/ HTTP/1.1
+Accept: text/html, application/xhtml+xml, */*
+Accept-Language: sk-SK
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+Host: www.google.com
+Cookie: NID=88=7cz5fGzFI27WGUkeJZvna7zIRsw59qLVfb5BZ8rx_ylvJWpi2u--sTNyBODdM3llJ-3pPNjeODAlAlbwesYfFir0Xo-29FoUwXXNqSgfa-TYLZf0NbFuUOz7VcBY_FT3
